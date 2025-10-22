@@ -1,0 +1,15 @@
+@model SkyTravel.Web.Models.Reservation
+<h3>Detalle de Reserva</h3>
+<div class="card p-3">
+  <dl class="row">
+    <dt class="col-sm-3">Código</dt><dd class="col-sm-9">@Model.ReservationCode</dd>
+    <dt class="col-sm-3">Pasajero</dt><dd class="col-sm-9">@Model.Passenger.FullName (@Model.Passenger.Document)</dd>
+    <dt class="col-sm-3">Vuelo</dt><dd class="col-sm-9">@Model.Flight.Code — @Model.Flight.Origin → @Model.Flight.Destination</dd>
+    <dt class="col-sm-3">Salida</dt><dd class="col-sm-9">@Model.Flight.DepartureUtc.ToLocalTime()</dd>
+    <dt class="col-sm-3">Asiento</dt><dd class="col-sm-9">@Model.SeatCode</dd>
+    <dt class="col-sm-3">Estado</dt><dd class="col-sm-9">@Model.Status</dd>
+  </dl>
+  <form method="post" action="/Tickets/Generate?reservationId=@Model.Id">
+    <button class="btn btn-dark">Descargar Ticket (PDF)</button>
+  </form>
+</div>

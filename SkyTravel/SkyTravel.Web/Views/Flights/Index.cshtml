@@ -1,0 +1,38 @@
+@model IEnumerable<SkyTravel.Web.Models.Flight>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3 class="mb-0">Vuelos</h3>
+  <a class="btn btn-primary" href="/Flights/Create">Nuevo Vuelo</a>
+</div>
+
+<div class="card p-3">
+<table class="table table-hover align-middle mb-0">
+  <thead class="table-light">
+    <tr>
+      <th>Código</th><th>Ruta</th><th>Salida</th><th>Llegada</th><th>Estado</th><th>Disp.</th><th></th>
+    </tr>
+  </thead>
+  <tbody>
+  @foreach (var f in Model) {
+    <tr>
+      <td class="fw-semibold">@f.Code</td>
+      <td>@f.Origin → @f.Destination</td>
+      <td>@f.DepartureUtc.ToLocalTime()</td>
+      <td>@f.ArrivalUtc.ToLocalTime()</td>
+      <td><span class="badge bg-secondary">@f.Status</span></td>
+      <td>@f.SeatsAvailable / @f.TotalSeats</td>
+      <td class="text-end">
+        <a class="btn btn-sm btn-outline-secondary" href="/Flights/Edit/@f.Id">Editar</a>
+        <form method="post" action="/Flights/ChangeStatus/@f.Id" class="d-inline">
+          <select name="status" class="form-select form-select-sm d-inline w-auto">
+            <option value="0">Programado</option><option value="1">EnVuelo</option>
+            <option value="2">Finalizado</option><option value="3">Cancelado</option>
+          </select>
+          <button class="btn btn-sm btn-outline-dark">Cambiar</button>
+        </form>
+      </td>
+    </tr>
+  }
+  </tbody>
+</table>
+</div>

@@ -1,0 +1,39 @@
+@model SkyTravel.Web.Models.Flight
+<h3>Nuevo Vuelo</h3>
+<div class="card p-3">
+<form method="post">
+  <div class="row g-3">
+    <div class="col-md-3">
+      <label class="form-label">Código</label>
+      <input asp-for="Code" class="form-control"/>
+      <span asp-validation-for="Code" class="text-danger"></span>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label">Origen</label>
+      <input asp-for="Origin" class="form-control"/>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label">Destino</label>
+      <input asp-for="Destination" class="form-control"/>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label">Sillas</label>
+      <input asp-for="TotalSeats" class="form-control" type="number" min="1" max="600"/>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Salida (UTC)</label>
+      <input asp-for="DepartureUtc" class="form-control" type="datetime-local"/>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Llegada (UTC)</label>
+      <input asp-for="ArrivalUtc" class="form-control" type="datetime-local"/>
+      <span asp-validation-for="ArrivalUtc" class="text-danger"></span>
+    </div>
+  </div>
+  <div class="mt-3">
+    <button class="btn btn-primary">Guardar</button>
+    <a class="btn btn-outline-secondary" href="/Flights">Cancelar</a>
+  </div>
+</form>
+</div>
+@section Scripts{ <partial name="_ValidationScriptsPartial" /> }

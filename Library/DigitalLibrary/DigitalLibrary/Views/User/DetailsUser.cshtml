@@ -1,0 +1,55 @@
+@model DigitalLibrary.Models.User
+
+<nav class="nav nav-pills flex-column flex-sm-row">
+    <a class="flex-sm-fill text-sm-center nav-link" asp-action="Index" asp-controller="User">Home</a>
+    <a class="flex-sm-fill text-sm-center nav-link active">Detalles Usuario</a>
+    <a class="flex-sm-fill text-sm-center nav-link" asp-action="Index" asp-controller="Loan">Préstamos</a>
+</nav>
+<hr>
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <form asp-action="Edit"> <!-- El formulario envía la información nueva al método Edit del UserController -->
+                    <h6 class="text-center">Editar Usuario</h6>
+                    <input type="hidden" asp-for="Id"/> <!-- Campo oculto que guarda el Id del Usuario (no se modifica) -->
+                    <div class="row"> <!-- Campos de entrada: Nombre, Documento, Correo, Teléfono -->
+                        <div class="p-1">
+                            <input type="text" class="form-control" name="Name"
+                                   placeholder="@Model.Name" value="@Model.Name">
+                        </div>
+                        <div class="p-1">
+                            <input type="text" class="form-control" name="Document"
+                                   placeholder="@Model.Document" value="@Model.Document">
+                        </div>
+                        <div class="p-1">
+                            <input type="text" class="form-control" name="Email"
+                                   placeholder="@Model.Email" value="@Model.Email">
+                        </div>
+                        <div class="p-1">
+                            <input type="text" class="form-control" name="Phone"
+                                   placeholder="@Model.Phone" value="@Model.Phone">
+                        </div>
+                    </div>
+                    <hr>
+                    <button type="submit" class="btn btn-success w-100">Guardar cambios</button> <!-- Botón para guardar los cambios realizados en el Usuario -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9"> 
+        <table class="table"> <!-- Tabla Principal que muestra los Detalles del Cliente-->
+            <thead>
+            <tr>
+                <th>TEMPORTAL</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>TEMPORAL</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

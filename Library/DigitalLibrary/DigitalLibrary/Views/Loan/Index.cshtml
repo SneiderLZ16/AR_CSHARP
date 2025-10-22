@@ -1,0 +1,114 @@
+@model DigitalLibrary.Models.ViewModel
+
+<nav class="nav nav-pills flex-column flex-sm-row">
+    <a class="flex-sm-fill text-sm-center nav-link" asp-action="Index" asp-controller="User">Home</a>
+    <a class="flex-sm-fill text-sm-center nav-link active">Préstamos</a>
+</nav>
+<hr>
+<div class="row m-3"> <!-- Loan -->
+    <h2 class="text-center">Administrador de Préstamos</h2>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <form asp-action="Save" asp-controller="Loan">
+                    <!-- El formulario envía la información al método Save del LoanController -->
+                    <h6 class="text-center">Crear Préstamo</h6>
+
+                    <div class="row"> <!-- Campos de entrada: LoanDate, ReturnDate, (ReturnDay), UserId, BookId -->
+                        <div>
+                            <label>Dia Creación</label>
+                            <input type="date" class="form-control" name="LoanDate">
+                        </div>
+                        <div>
+                            <label>Fecha de devolución</label>
+                            <input type="date" class="form-control" name="ReturnDate">
+                        </div>
+                        <div>
+                            <label>Usuario</label>
+                            <select name="UserId" class="form-control">
+                                <option value="">-- Seleccione un Usuario --</option>
+                                @if (Model.Users.Any())
+                                {
+                                    foreach (var user in Model.Users)
+                                    {
+                                        <option value="@user.Id">@user.Name @user.Document</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div>
+                            <label>Libro</label>
+                            <select name="BookId" class="form-control">
+                                <option value="">-- Seleccione un Libro --</option>
+                                @if (Model.Books.Any())
+                                {
+                                    foreach (var book in Model.Books)
+                                    {
+                                        <option value="@book.Id">@book.Title @book.Code</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <hr>
+                    <button type="submit" class="btn btn-success w-100">Guardar Préstamo</button>
+                    <!-- Botón para enviar los datos y registrar el Préstamo -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <table class="table"> <!-- Tabla Principal que muestra los Préstamos-->
+            <thead>
+            <tr>
+                <th scope="col">Id</th>                  <!-- Columna del Id -->
+                <th scope="col">Dia Creación</th>        <!-- Columna del LoanDate -->
+                <th scope="col">Fecha de devolución</th> <!-- Columna del ReturnDate -->
+                <th scope="col">Fecha devuelto</th>      <!-- Columna del ReturnDay -->
+                <th scope="col">Usuario</th>             <!-- Columna para UserId -->
+                <th scope="col">Libro</th>               <!-- Columna para BookId -->
+                <th scope="col">Devuelto</th>            <!-- Columna para Devuelto -->
+                <th scope="col">Detalles</th>            <!-- Columna para Detalles -->
+                <th scope="col">Eliminar</th>            <!-- Columna para Eliminar -->
+            </tr>
+            </thead>
+            <tbody>
+            @if (Model.Loans.Any()) // Validar que la lista (Model) no esté vacía o nula
+            {
+                foreach (var loan in Model.Loans) // Recorrer la lista de Préstamos
+                {
+                    <tr>
+                        <td>@loan.Id</td>         <!-- Muestra el Id -->
+                        <td>@loan.LoanDate.ToString("dd/MM/yyyy")</td>   <!-- Muestra el LoanDate -->
+                        <td>@loan.ReturnDate.ToString("dd/MM/yyyy")</td> <!-- Muestra el ReturnDate -->
+                        <td>@(loan.ReturnDay == DateTime.MinValue ? "—" : loan.ReturnDay.ToString("dd/MM/yyyy"))</td>  <!-- Muestra el ReturnDay -->
+                        <td>@loan.User.Name</td>     <!-- Muestra el UserId -->
+                        <td>@loan.Book.Title</td>     <!-- Muestra el BookId -->
+                        <td>
+                            <!-- Botón que redirige a la acción Devuelto enviando el Id -->
+                            <a class="btn btn-primary" asp-action="EditDay" asp-controller="Loan"
+                               asp-route-id="@loan.Id">Devuelto</a>
+                        </td>
+                        <td>
+                            <!-- Botón que redirige a la acción Detalles enviando el Id -->
+                            <a class="btn btn-primary" asp-action="DetailsLoan" asp-controller="Loan"
+                               asp-route-id="@loan.Id">Detalles</a>
+                        </td>
+                        <td>
+                            <!-- Botón que redirige a la acción Eliminar enviando el Id -->
+                            <a class="btn btn-danger" asp-action="Delete" asp-controller="Loan"
+                               asp-route-id="@loan.Id">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <!-- Si no hay Préstamos en la lista, mostrar este mensaje -->
+                <p class="text-center text-danger">¡No hay Préstamos!</p>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

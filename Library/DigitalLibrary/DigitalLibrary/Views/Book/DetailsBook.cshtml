@@ -1,0 +1,59 @@
+@model DigitalLibrary.Models.Book
+
+<nav class="nav nav-pills flex-column flex-sm-row">
+    <a class="flex-sm-fill text-sm-center nav-link" asp-action="Index" asp-controller="User">Home</a>
+    <a class="flex-sm-fill text-sm-center nav-link active">Detalles Libro</a>
+    <a class="flex-sm-fill text-sm-center nav-link" asp-action="Index" asp-controller="Loan">Préstamos</a>
+</nav>
+<hr>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <form asp-action="Edit">
+                    <!-- El formulario envía la información nueva al método Edit del BookController -->
+                    <h6 class="text-center">Editar Libro</h6>
+                    <input type="hidden" asp-for="Id"/>
+                    <!-- Campo oculto que guarda el Id del Libro (no se modifica) -->
+                    <div class="row"> <!-- Campos de entrada: Titulo, Autor, Código, Cantidad -->
+                        <div class="p-1">
+                            <input type="text" class="form-control" name="Title"
+                                   placeholder="@Model.Title" value="@Model.Title">
+                        </div>
+                        <div class="p-1">
+                            <input type="text" class="form-control" name="Author"
+                                   placeholder="@Model.Author" value="@Model.Author">
+                        </div>
+                        <div class="p-1">
+                            <input type="number" class="form-control" name="Code"
+                                   placeholder="@Model.Code" value="@Model.Code">
+                        </div>
+                        <div class="p-1">
+                            <input type="text" class="form-control" name="Stock"
+                                   placeholder="@Model.Stock" value="@Model.Stock">
+                        </div>
+                    </div>
+                    <hr>
+                    <button type="submit" class="btn btn-success w-100">Guardar cambios</button>
+                    <!-- Botón para guardar los cambios realizados en el Libro -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!--<div class="col-md-9 d-none"> 
+        <table class="table">
+            <thead>
+            <tr>
+                <th>TEMPORAL</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>TEMPORAL</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>-->
+</div>

@@ -1,0 +1,20 @@
+@model IEnumerable<SkyTravel.Web.Models.Passenger>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3 class="mb-0">Pasajeros</h3>
+  <a class="btn btn-primary" href="/Passengers/Create">Nuevo Pasajero</a>
+</div>
+
+<div class="card p-3">
+<table class="table table-hover align-middle mb-0">
+ <thead class="table-light"><tr><th>Nombre</th><th>Documento</th><th>Teléfono</th><th>Correo</th><th></th></tr></thead>
+ <tbody>
+ @foreach (var p in Model) {
+   <tr>
+     <td>@p.FullName</td><td>@p.Document</td><td>@p.Phone</td><td>@p.Email</td>
+     <td class="text-end"><a class="btn btn-sm btn-outline-secondary" href="/Passengers/Edit/@p.Id">Editar</a></td>
+   </tr>
+ }
+ </tbody>
+</table>
+</div>

@@ -1,0 +1,172 @@
+@model DigitalLibrary.Models.ViewModel
+
+<nav class="nav nav-pills flex-column flex-sm-row">
+    <a class="flex-sm-fill text-sm-center nav-link active" asp-action="Index" asp-controller="User">Home</a>
+    <a class="flex-sm-fill text-sm-center nav-link" asp-action="Index" asp-controller="Loan">Préstamos</a>
+</nav>
+<hr>
+<div class="col"> <!-- CONTENEDOR PADRE -->
+<div class="row m-3"> <!-- User -->
+    <h2 class="text-center">Administrador de Usuarios</h2>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <form asp-action="Save" asp-controller="User">
+                    <!-- El formulario envía la información al método Save del UserController -->
+                    <h6 class="text-center">Crear Usuario</h6>
+
+                    <div class="row"> <!-- Campos de entrada: Nombre, Documento, Correo, Teléfono -->
+                        <div>
+                            <label>Nombre</label>
+                            <input type="text" class="form-control" name="Name">
+                        </div>
+                        <div>
+                            <label>Documento</label>
+                            <input type="text" class="form-control" name="Document">
+                        </div>
+                        <div>
+                            <label>Correo</label>
+                            <input type="email" class="form-control" name="Email">
+                        </div>
+                        <div>
+                            <label>Teléfono</label>
+                            <input type="text" class="form-control" name="Phone">
+                        </div>
+                    </div>
+                    <hr>
+                    <button type="submit" class="btn btn-success w-100">Guardar Usuario</button>
+                    <!-- Botón para enviar los datos y registrar el Usuario -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <table class="table"> <!-- Tabla Principal que muestra los Usuarios-->
+            <thead>
+            <tr>
+                <th scope="col">Id</th>         <!-- Columna del Id -->
+                <th scope="col">Nombre</th>     <!-- Columna del Nombre -->
+                <th scope="col">Documento</th>  <!-- Columna del Documento -->
+                <th scope="col">Correo</th>     <!-- Columna del Correo -->
+                <th scope="col">Teléfono</th>   <!-- Columna para Teléfono -->
+                <th scope="col">Detalles</th>   <!-- Columna para Detalles -->
+                <th scope="col">Eliminar</th>   <!-- Columna para Eliminar -->
+            </tr>
+            </thead>
+            <tbody>
+            @if (Model.Users.Any()) // Validar que la lista (Model) no esté vacía o nula
+            {
+                foreach (var user in Model.Users) // Recorrer la lista de Usuarios
+                {
+                    <tr>
+                        <td>@user.Id</td>       <!-- Muestra el Id -->
+                        <td>@user.Name</td>     <!-- Muestra el Nombre -->
+                        <td>@user.Document</td> <!-- Muestra el Documento -->
+                        <td>@user.Email</td>    <!-- Muestra el Correo -->
+                        <td>@user.Phone</td>    <!-- Muestra el Teléfono -->
+                        <td>
+                            <!-- Botón que redirige a la acción Detalles enviando el Id -->
+                            <a class="btn btn-primary" asp-action="DetailsUser" asp-controller="User"
+                               asp-route-id="@user.Id">Detalles</a>
+                        </td>
+                        <td>
+                            <!-- Botón que redirige a la acción Eliminar enviando el Id -->
+                            <a class="btn btn-danger" asp-action="Delete" asp-controller="User"
+                               asp-route-id="@user.Id">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <!-- Si no hay Usuarios en la lista, mostrar este mensaje -->
+                <p class="text-center text-danger">¡No hay Usuarios!</p>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+    <div class="row m-3"> <!-- Book -->
+        <h2 class="text-center">Administrador de Libros</h2>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <form asp-action="Save" asp-controller="Book">
+                        <!-- El formulario envía la información al método Save del BookController -->
+                        <h6 class="text-center">Crear Libro</h6>
+
+                        <div class="row"> <!-- Campos de entrada: Titulo, Autor, Código, Cantidad -->
+                            <div>
+                                <label>Titulo</label>
+                                <input type="text" class="form-control" name="Title">
+                            </div>
+                            <div>
+                                <label>Autor</label>
+                                <input type="text" class="form-control" name="Author">
+                            </div>
+                            <div>
+                                <label>Código</label>
+                                <input type="text" class="form-control" name="Code">
+                            </div>
+                            <div>
+                                <label>Cantidad</label>
+                                <input type="number" class="form-control" name="Stock">
+                            </div>
+                        </div>
+                        <hr>
+                        <button type="submit" class="btn btn-success w-100">Guardar Libro</button>
+                        <!-- Botón para enviar los datos y registrar el Libro -->
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <table class="table"> <!-- Tabla Principal que muestra los Libros-->
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>         <!-- Columna del Id -->
+                    <th scope="col">Titulo</th>     <!-- Columna del Titulo -->
+                    <th scope="col">Autor</th>      <!-- Columna del Autor -->
+                    <th scope="col">Código</th>     <!-- Columna del Código -->
+                    <th scope="col">Cantidad</th>   <!-- Columna para Cantidad -->
+                    <th scope="col">Detalles</th>   <!-- Columna para Detalles -->
+                    <th scope="col">Eliminar</th>   <!-- Columna para Eliminar -->
+                </tr>
+                </thead>
+                <tbody>
+                @if (Model.Books.Any()) // Validar que la lista (Model) no esté vacía o nula
+                {
+                    foreach (var user in Model.Books) // Recorrer la lista de Libros
+                    {
+                        <tr>
+                            <td>@user.Id</td>     <!-- Muestra el Id -->
+                            <td>@user.Title</td>  <!-- Muestra el Titulo -->
+                            <td>@user.Author</td> <!-- Muestra el Autor -->
+                            <td>@user.Code</td>   <!-- Muestra el Código -->
+                            <td>@user.Stock</td>  <!-- Muestra el Cantidad -->
+                            <td>
+                                <!-- Botón que redirige a la acción Detalles enviando el Id -->
+                                <a class="btn btn-primary" asp-action="DetailsBook" asp-controller="Book"
+                                   asp-route-id="@user.Id">Detalles</a>
+                            </td>
+                            <td>
+                                <!-- Botón que redirige a la acción Eliminar enviando el Id -->
+                                <a class="btn btn-danger" asp-action="Delete" asp-controller="Book"
+                                   asp-route-id="@user.Id">Eliminar</a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <!-- Si no hay Libros en la lista, mostrar este mensaje -->
+                    <p class="text-center text-danger">¡No hay Libros!</p>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
